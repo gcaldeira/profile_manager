@@ -53,6 +53,7 @@ $user_editable = null;
 $output_as_tags = null;
 $blank_available = null;
 $admin_only = null;
+$field_params = null;
 
 if ($vars["entity"]) {
 	
@@ -65,6 +66,7 @@ if ($vars["entity"]) {
 	$metadata_placeholder = $vars["entity"]->metadata_placeholder;
 	$metadata_type = $vars["entity"]->metadata_type;
 	$metadata_options = $vars["entity"]->metadata_options;
+    $field_params =  $vars["entity"]->field_params;
 	
 	$show_on_register = $vars["entity"]->show_on_register;
 	$mandatory = $vars["entity"]->mandatory;
@@ -89,6 +91,7 @@ $formbody .= elgg_echo('profile_manager:admin:metadata_hint') . "*:" . elgg_view
 $formbody .= elgg_echo('profile_manager:admin:metadata_placeholder') . "*:" . elgg_view('input/text', array('name' => 'metadata_placeholder', "value" => $metadata_placeholder));
 $formbody .= elgg_echo('profile_manager:admin:field_type') . ": " . $type_control;
 $formbody .= "<br />" . elgg_echo('profile_manager:admin:metadata_options') . "*:" . elgg_view('input/text', array('name' => 'metadata_options', "value" => $metadata_options));
+$formbody .= "<br />" . elgg_echo('profile_manager:admin:field_params') . "*:" . elgg_view('input/text', array('name' => 'field_params', "value" => $field_params));
 
 $formbody .= "<div class='elgg-module elgg-module-inline'><div class='elgg-head'><h3>" . elgg_echo("profile_manager:admin:additional_options") . "<span class='custom_fields_more_info' id='more_info_profile_field_additional'></span></h3></div><div class='elgg-body'>";
 $formbody .= "<table>";

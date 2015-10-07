@@ -142,13 +142,28 @@ if (count($fields) > 0) {
 			}
 			
 			$fields_result .= "<br />";
-			
-			$fields_result .= elgg_view("input/{$metadata_type}", array(
-													"name" => "custom_profile_fields_" . $field->metadata_name,
-													"value" => $value,
-													"options" => $field->getOptions(),
-													"placeholder" => $field->getPlaceholder()
-													));
+
+
+            $field_options = array(
+                "name" => "custom_profile_fields_" . $field->metadata_name,
+                "value" => $value,
+                "options" => $field->getOptions(),
+                "placeholder" => $field->getPlaceholder()
+            );
+            $field_params = json_decode($field->field_params, true);
+            if(is_array($field_params) && count($field_params) >0){
+                $field_options = array_merge($field_options, $field_params);
+            }
+
+            if($field->metadata_type == 'entitypicker' && array_key_exists('subtype', $field_params)){
+                if(is_array($field_params) && array_key_exists('subtype', $field_params)){
+                    $field_params['relationship'] = "user:".$field_params['subtype'];
+                    $field_params['relationship_guid'] = $user->guid;
+                    $field_options['values'] = sp_get_array_guid(elgg_get_entities_from_relationship($field_params));
+                }
+            }
+
+			$fields_result .= elgg_view("input/{$metadata_type}", $field_options);
 			$fields_result .= "</div>";
 		}
 		

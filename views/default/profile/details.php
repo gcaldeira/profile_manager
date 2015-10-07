@@ -81,7 +81,18 @@ if (count($cats) > 0) {
 			
 			// make nice title
 			$title = $field->getTitle();
-			
+
+            if($field->metadata_type == 'entitypicker'){
+                $field_params = json_decode($field->field_params, true);
+                if(is_array($field_params) && array_key_exists('subtype', $field_params)){
+                    $field_params['relationship'] = "user:".$field_params['subtype'];
+                    $field_params['relationship_guid'] = $user->guid;
+                    $field_params['full_view'] = false;
+                    $field_result .= elgg_list_entities_from_relationship($field_params);
+                    break;
+                }
+            }
+
 			// get user value
 			$value = $user->$metadata_name;
 			

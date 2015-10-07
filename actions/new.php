@@ -18,6 +18,7 @@ $metadata_hint = trim(get_input("metadata_hint"));
 $metadata_placeholder = trim(get_input("metadata_placeholder"));
 $metadata_type = get_input("metadata_type");
 $metadata_options = get_input("metadata_options");
+$field_params = get_input('field_params');
 
 $show_on_register = get_input("show_on_register");
 $mandatory = get_input("mandatory");
@@ -137,6 +138,7 @@ if ($current_field && ($current_field->getSubtype() != CUSTOM_PROFILE_FIELDS_PRO
 			$field->admin_only = $admin_only;
 			$field->output_as_tags = $output_as_tags;
 			$field->blank_available = $blank_available;
+            $field->field_params = $field_params;
 
 			if (empty($current_field)) {
 				$field->order = $max_fields;

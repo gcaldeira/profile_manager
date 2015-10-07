@@ -55,6 +55,7 @@ function profile_manager_register_custom_field_types() {
 	profile_manager_add_custom_field_type("custom_profile_field_types", 'pm_twitter', elgg_echo('profile_manager:admin:options:pm_twitter'), $social_options);
 	profile_manager_add_custom_field_type("custom_profile_field_types", 'pm_facebook', elgg_echo('profile_manager:admin:options:pm_facebook'), $social_options);
 	profile_manager_add_custom_field_type("custom_profile_field_types", 'pm_linkedin', elgg_echo('profile_manager:admin:options:pm_linkedin'), $social_options);
+    profile_manager_add_custom_field_type("custom_profile_field_types", 'entitypicker', elgg_echo('profile_manager:admin:options:entitypicker'), $profile_options);
 	//profile_manager_add_custom_field_type("custom_profile_field_types", 'pm_file', elgg_echo('profile_manager:admin:options:file'), $file_options);
 	
 	// registering group field types
@@ -293,13 +294,13 @@ function profile_manager_get_categorized_fields($user = null, $edit = false, $re
 						$filtered_ordered_cats[$cat_guid][$field->order] = $field;
 					}
 				} else {
-					// only add if value exists
-					$metadata_name = $field->metadata_name;
-					$user_value = $user->$metadata_name;
-					
-					if (!empty($user_value) || $user_value === 0) {
-						$filtered_ordered_cats[$cat_guid][$field->order] = $field;
-					}
+                    // only add if value exists
+                    $metadata_name = $field->metadata_name;
+                    $user_value = $user->$metadata_name;
+
+                    if (!empty($user_value) || $user_value === 0 || $field->metadata_type == 'entitypicker') {
+                        $filtered_ordered_cats[$cat_guid][$field->order] = $field;
+                    }
 				}
 			}
 		}
